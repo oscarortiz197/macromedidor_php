@@ -1,0 +1,55 @@
+
+#mes{
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.icono {
+    height: 12px;
+    margin-left: 5px;
+}
+ul {
+    max-width: 750;
+}
+
+.tabla,
+table {
+    width: 100%;
+    max-width: 700px;
+}
+.tabla table{
+    border: 1px solid rgb(48, 44, 44);
+    border-spacing: 0;
+    
+}
+th{
+    font-size: 14pt;
+    padding: 10px 0px;
+    background-color: #0a1520;
+    color: #FFEFD6 ;
+}
+
+.tabla,
+table,
+td ,th{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+ td {
+    border-top: 1px solid black;
+    padding:8px 0px; 
+}
+#Consumo{
+margin: 20px 0px;
+font-size: 16pt;
+text-transform: uppercase;
+}
+a{
+    color: black;
+    width: 100%;
+    text-decoration: none;
+}
