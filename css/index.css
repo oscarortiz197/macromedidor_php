@@ -1,14 +1,158 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+  margin: 0;
+  padding: 0;
 }
-
 body {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  width: 90%;
 }
 
+header {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+
+
+
+.sidebar {
+  height: 100%;
+  width: 0px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left:0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color: white;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar .close-btn{
+display: flex;
+justify-content: right;
+padding-right: 20%;
+
+
+
+}
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.menu-btn {
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: white;
+}
+
+main ,.container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.calendario,.tabla{
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+ 
+
+}
+
+/* Ocultar o mostrar la tabla ************ */
+.hiden{
+  display: none;
+}
+
+
+
+header{
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+ body main .container .acciones{
+  display: flex;
+  width: 300px;
+  justify-content: space-around;
+ 
+}
+.acciones button{
+  width: 100px;
+  padding: 5px; 
+  /* background-color: transparent; */
+} 
+
+.fecha {
+  display: flex;
+  width: 400px;
+  padding: 10px;
+  justify-content: space-between; /* Para alinear los elementos al inicio, al centro y al final */
+  align-items: center; /* Para centrar verticalmente los elementos */
+  
+}
+
+.fecha button {
+ width: 40px;
+ cursor: pointer;
+}
+
+.error {
+  border: 2px solid red; /* Ancho del borde */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 0 5px red; /* Sombra roja para resaltar */
+}
+
+/* Opcional: Cambiar el color del texto dentro del input con error */
+.error::placeholder {
+  color: darkred;
+}
+
+
+
+
+
+.mes{
+  padding: 5px;
+}
+
+.opciones{
+  padding: 5px;
+
+}
+
+.user{
+  width: 30px;
+  height: 30px;
+  background-color: #333;
+  position: absolute;
+  right: 40px;
+  top:10px;
+}

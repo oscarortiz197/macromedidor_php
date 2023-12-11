@@ -3,49 +3,81 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecturas</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/calendario.css">
     <link rel="stylesheet" href="css/tabla.css">
-    <link rel="stylesheet" href="css/menu.css">
-    <script src="js/index.js"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>lecturas</title>
 </head>
 
 <body>
-    <div class="menu">
-        <menu>
-            <ul>
-                <li id="btnactual"> Mes actual</li>
-                <li id="btnanterior">Mes anterior</li>
-                <li id="btnlista">Lista completa</li>     
-                <script>mes_btn();</script>
-            </ul>
-        </menu>
-    </div>
-    <div class="tabla">
-        <h1 id="mes"></h1>
-        <table>
-            <tr>
-                <th>Fecha</th>
-                <th>Incio</th>
-                <th>Final</th>
-                <th>Consumo</th>
-            </tr>
-            <tbody id="bodytable">
-            <script> lista("./vista/buscar.php?estado=actual");</script>
-            </tbody>
-        </table>
+    <header>
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button> <!--&#9776-->
+        <nav>
+            <div class="sidebar" id="mySidebar">
+                <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">X</a> <!--&#9665-->
+                <a href="#"> Inicio</a>
+                <a href="#">Estadísticas</a>
+                <a href="#">Configuración</a>
+                <a href="#">Más</a>
+            </div>
+        </nav>
 
-        <p id="Consumo"></p>
+    </header>
+    <div class="user">
+        Usuario
     </div>
-    <div class="header">
+    <main>
+        <div class="mes">
+            <p>
+                <?php echo (date('F')); ?>
+            </p>
+            <!-- <div class="opciones">
+                Calendario <input type="radio" checked name="opciones" id="rbt_calendario">
+                Tabla <input type="radio" name="opciones" id="rbt_tabla">
 
-    </div>
-    <script src="js/gestos.js"></script>
-    
+
+            </div> -->
+        </div>
+        <div class="container" id="container">
+            <div class="calendario" id="calendario">
+                Este es el calendario
+            </div>
+             <div class="fecha">
+                    Desde <input id="desde"  type="date">
+                   hasta <input id="hasta" type="date">
+                    <button id="buscar">&#128269;</button>
+                </div>
+            <div class='tabla' id="tabla">
+               
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Inicio</th>
+                            <th>Final</th>
+                            <th>Consumo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p id="total"> </p>
+                <p id="promedio"></p>
+                <!-- Aquí se generará dinámicamente la tabla con el contenido mediante js -->
+            </div>
+            <div class="acciones">
+                <button id="anterior">Anterior</button>
+                <button id="siguiente">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/lecturas/lecturas.js"></script>
+    <script src="js/acciones.js"></script>
 </body>
 
 </html>
