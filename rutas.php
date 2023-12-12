@@ -14,4 +14,7 @@ define('RUTA_LECTURAS', dirname(__DIR__).'/macromedidor/api/lecturas/lectura.php
 define('RUTA_UPLOADS', dirname(__DIR__).'/macromedidor/uploads/');
 
 
+
+
+
 ?>
