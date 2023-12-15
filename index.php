@@ -10,21 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>lecturas</title>
 </head>
-
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/macromedidor/plantilla/menu.php"; ?>
 <body>
-    <header>
-        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button> <!--&#9776-->
-        <nav>
-            <div class="sidebar" id="mySidebar">
-                <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">X</a> <!--&#9665-->
-                <a href="index"> Inicio</a>
-                <a href="./estadistica.php">Estadísticas</a>
-                <a href="#">Configuración</a>
-                <a href="#">Más</a>
-            </div>
-        </nav>
 
-    </header>
     <div class="user">
         Usuario
     </div>
@@ -46,8 +34,8 @@
             </div>
              <div class="fecha">
                     Desde <input id="desde"  type="date">
-                   hasta <input id="hasta" type="date">
-                    <button id="buscar">&#128269;</button>
+                    Hasta <input id="hasta" type="date">
+                    <button id="buscar" class="btn btn-outline-primary">&#128269;</button>
                 </div>
             <div class='tabla' id="tabla">
                
@@ -68,8 +56,8 @@
                 <!-- Aquí se generará dinámicamente la tabla con el contenido mediante js -->
             </div>
             <div class="acciones">
-                <button id="anterior">Anterior</button>
-                <button id="siguiente">Siguiente</button>
+                <button id="anterior" class="btn btn-outline-primary">Anterior</button>
+                <button id="siguiente" class="btn btn-outline-primary">Siguiente</button>
             </div>
         </div>
     </main>

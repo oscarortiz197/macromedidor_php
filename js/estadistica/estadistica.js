@@ -1,10 +1,18 @@
 
 async function obtenerEstadistica() {
-    const inicio =document.getElementById('desde').value;
+    const inicio = document.getElementById('desde').value;
     const final = document.getElementById('hasta').value;
-    
-    if (isNaN(new Date(inicio)) || isNaN(new Date(inicio))) return console.log('error');
 
+    if (isNaN(new Date(inicio)) || isNaN(new Date(inicio))) return console.log('error');
+    if (inicio > final) {
+        await Swal.fire({
+            title: 'Alerta!',
+            text: 'Selecciona fechas donde inicio sea menor que final',
+            icon: 'warning', // Puedes cambiar 'success' por 'warning', 'error', 'info', etc.
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
     let datos = await data(inicio, final) ?? 0;
 
     // Destruir el gráfico existente si hay uno
@@ -55,7 +63,7 @@ function mostrarGrafica(datos) {
 
         for (const month in months) {
             const stats = months[month];
-            
+
             labels.push(`${month} ${year}`);
             data.push(stats.TOTAL);
             countData.push(stats.COUNT); // Agregar datos de COUNT
@@ -106,12 +114,51 @@ function mostrarGrafica(datos) {
         options: options,
     });
 
-    
+
 }
 
-function printChart(chart) {
-    
-    const canvas = chart.canvas;
-    
-    window.print(canvas);
+async function printChart() {
+
+
+
+    if (navigator.userAgent.indexOf("Edg") !== -1) {
+        // Código específico para Microsoft Edge
+        print();
+        return;
+    }
+
+
+    let canvas = document.getElementById("miGrafica");
+    let dataURL = canvas.toDataURL("image/png");
+
+    let ventanaImpresion = window.open();
+    ventanaImpresion.document.write('<img src="' + dataURL + '" />');
+
+    // Aplicar estilos de impresión personalizados para quitar encabezados y pies de página
+    let style = ventanaImpresion.document.createElement("style");
+    style.textContent = `@media print {
+    @page {
+        size: auto;  /* Usa el tamaño predeterminado de la impresora */
+        margin: 0mm; /* Sin márgenes */
+    }
+
+    body {
+        margin: 0; /* Sin márgenes para el cuerpo */
+    }
+
+    /* Puedes ocultar los encabezados y pies de página según la estructura de tu documento */
+    header, footer {
+        display: none;
+    }
+}`;
+
+    ventanaImpresion.document.head.appendChild(style);
+
+    // Imprimir el contenido
+    ventanaImpresion.print();
+
+    ventanaImpresion.close();
+
+
+
 }
