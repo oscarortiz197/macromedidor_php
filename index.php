@@ -17,8 +17,8 @@
         <nav>
             <div class="sidebar" id="mySidebar">
                 <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">X</a> <!--&#9665-->
-                <a href="#"> Inicio</a>
-                <a href="#">Estadísticas</a>
+                <a href="index"> Inicio</a>
+                <a href="./estadistica.php">Estadísticas</a>
                 <a href="#">Configuración</a>
                 <a href="#">Más</a>
             </div>

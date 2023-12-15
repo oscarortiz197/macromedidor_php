@@ -1,45 +1,39 @@
 
-
 async function obtenerEstadistica() {
-    var fechaInicialString = document.getElementById('desde').value;
+    const inicio =document.getElementById('desde').value;
+    const final = document.getElementById('hasta').value;
+    
+    if (isNaN(new Date(inicio)) || isNaN(new Date(inicio))) return console.log('error');
 
-    // Cortar los últimos dos dígitos
-    fechaInicialString = fechaInicialString.slice(0, -2);
+    let datos = await data(inicio, final) ?? 0;
 
-    // Añadir '01' al final para obtener el primer día del mes
-    fechaInicialString += '01';
+    // Destruir el gráfico existente si hay uno
+    if (window.myChart) {
+        window.myChart.destroy();
+    }
 
-    var fechaInicial = new Date(fechaInicialString);
+    // Limpiar el contenido del lienzo
+    const canvas = document.getElementById('miGrafica');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Fecha final: 2023-07-24
-    var fechaFinalString = document.getElementById('hasta').value;
+    if (datos != 0) {
+        mostrarGrafica(datos);
+    }
+}
 
-    // Cortar los últimos dos dígitos
-    fechaFinalString = fechaFinalString.slice(0, -2);
-
-    // Añadir '01' al final para obtener el último día del mes
-    fechaFinalString += '01';
-
-    var fechaFinal = new Date(fechaFinalString);
-
-    // Establecer el día al último día del mes
-    fechaFinal.setMonth(fechaFinal.getMonth() + 1);
-    fechaFinal.setDate(0);
-
-    // Obtener la fecha en formato deseado (YYYY-MM-DD)
-    var resultadoInicial = fechaInicial.toISOString().split('T')[0];
-    var resultadoFinal = fechaFinal.toISOString().split('T')[0];
-
+async function data(inicio, final) {
     const parametros = {
-        inicio: resultadoInicial,
-        final: resultadoFinal
+        inicio: inicio,
+        final: final
     };
-     console.log(parametros )
+
     const queryString = new URLSearchParams(parametros).toString();
     const respuesta = await fetch(`./api/estadisticas/estadistica.php?${queryString}`);
-     console.log(respuesta)
+    // console.log(respuesta.json);
     if (respuesta.status == 200) {
         const datos = await respuesta.json();
+
         return datos;
     } else if (respuesta.status == 201) {
 
@@ -47,5 +41,77 @@ async function obtenerEstadistica() {
     } else {
         return 1;
     }
- 
+
+}
+
+
+function mostrarGrafica(datos) {
+    let labels = []; // Nombres de los meses
+    let data = []; // Datos de consumo para cada mes
+    let countData = []; // Datos de COUNT para cada mes
+
+    for (const year in datos) {
+        const months = datos[year];
+
+        for (const month in months) {
+            const stats = months[month];
+            
+            labels.push(`${month} ${year}`);
+            data.push(stats.TOTAL);
+            countData.push(stats.COUNT); // Agregar datos de COUNT
+        }
+    }
+
+    // Configurar el contexto del gráfico
+    const ctx = document.getElementById('miGrafica').getContext('2d');
+
+    // Configurar el conjunto de datos
+    const dataset = {
+        labels: labels,
+        datasets: [{
+            label: 'Consumo',
+            backgroundColor: '#9AD0C2', // Color de fondo de las barras
+            borderColor: '#2D9596', // Color del borde de las barras
+            borderWidth: 1, // Ancho del borde de las barras
+            data: data,
+            countData: countData, // Datos de COUNT
+        }],
+    };
+
+    // Configurar las opciones del gráfico
+    const options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (context) => {
+                        const label = context.dataset.label || '';
+                        const value = context.parsed.y || 0;
+                        const countValue = context.dataset.countData[context.dataIndex] || 0;
+                        return `${label}: ${value} - Días suministrados: ${countValue}`;
+                    },
+                },
+            },
+        },
+    };
+
+    // Crear el gráfico de barras
+    window.myChart = new Chart(ctx, {
+        type: 'bar',
+        data: dataset,
+        options: options,
+    });
+
+    
+}
+
+function printChart(chart) {
+    
+    const canvas = chart.canvas;
+    
+    window.print(canvas);
 }
